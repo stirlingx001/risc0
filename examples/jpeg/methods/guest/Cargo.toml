@@ -1,0 +1,11 @@
+[package]
+name = "decode"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+image = { version = "0.25.8"}
+risc0-zkvm = { path = "../../../../risc0/zkvm", default-features = false, features = ["std"]  }
+

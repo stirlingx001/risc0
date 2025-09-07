@@ -1,0 +1,37 @@
+// Copyright 2024 RISC Zero, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+use std::fs;
+use jpeg::decode;
+use jpeg_methods::DECODE_ID;
+
+fn main() {
+    tracing_subscriber::fmt()
+        .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
+        .init();
+
+    let jpeg_data = fs::read("1.jpg").expect("Failed to read JPEG file");
+
+    println!("len: {}, {:?}", jpeg_data.len(), &jpeg_data[0..10]);
+
+    // Pick two numbers
+    let (receipt, _) = decode(jpeg_data);
+
+    // Here is where one would send 'receipt' over the network...
+
+    // Verify receipt, panic if it's wrong
+    receipt.verify(DECODE_ID).expect(
+        "Code you have proven should successfully verify; did you specify the correct image ID?",
+    );
+}

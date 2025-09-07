@@ -38,6 +38,7 @@ members = [
   "wordle",
   "wordle/core",
   "xgboost",
+  "jpeg"
 ]
 
 # Always optimize; otherwise tests take excessively long.
