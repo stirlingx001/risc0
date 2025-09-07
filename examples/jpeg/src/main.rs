@@ -14,6 +14,7 @@
 
 use std::fs;
 use jpeg::decode;
+use std::time::Instant;
 use jpeg_methods::DECODE_ID;
 
 fn main() {
@@ -21,12 +22,17 @@ fn main() {
         .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
         .init();
 
-    let jpeg_data = fs::read("1.jpg").expect("Failed to read JPEG file");
+    let jpeg_data = fs::read("2.jpg").expect("Failed to read JPEG file");
 
     println!("len: {}, {:?}", jpeg_data.len(), &jpeg_data[0..10]);
 
     // Pick two numbers
+
+    let start_time = Instant::now();
     let (receipt, _) = decode(jpeg_data);
+    let duration = start_time.elapsed();
+
+    println!("took : {} ", duration.as_secs());
 
     // Here is where one would send 'receipt' over the network...
 
